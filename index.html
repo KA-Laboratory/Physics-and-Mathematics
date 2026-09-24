@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kentaro Amauchi — Number Theory</title>
+<meta name="description" content="Academic homepage. Number theory, combinatorics, formal verification in Lean 4.">
+<style>
+  :root { --fg:#1a1a1a; --muted:#5c5c5c; --rule:#e0e0e0; --link:#0b5394; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; padding:3.5rem 1.5rem 5rem;
+    font-family:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+    font-size:17px; line-height:1.65; color:var(--fg); background:#fff;
+  }
+  main { max-width:44rem; margin:0 auto; }
+  h1 { font-size:2rem; font-weight:600; margin:0 0 .2rem; letter-spacing:-.01em; }
+  .sub { color:var(--muted); margin:0 0 2.2rem; font-size:1.02rem; }
+  h2 {
+    font-size:.82rem; font-weight:700; text-transform:uppercase; letter-spacing:.09em;
+    color:var(--muted); margin:2.6rem 0 .8rem; padding-bottom:.35rem;
+    border-bottom:1px solid var(--rule);
+  }
+  p { margin:0 0 1rem; }
+  a { color:var(--link); text-decoration:none; border-bottom:1px solid rgba(11,83,148,.28); }
+  a:hover { border-bottom-color:var(--link); }
+  ul { margin:0 0 1rem; padding-left:1.15rem; }
+  li { margin-bottom:.55rem; }
+  .work { margin-bottom:1.4rem; }
+  .work .title { font-weight:600; }
+  .work .meta { color:var(--muted); font-size:.94rem; }
+  .tag {
+    display:inline-block; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:.72rem; letter-spacing:.03em; text-transform:uppercase;
+    color:var(--muted); border:1px solid var(--rule); border-radius:3px;
+    padding:.1rem .4rem; margin-left:.4rem; vertical-align:.08em;
+  }
+  code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.9em; }
+  footer { margin-top:3.5rem; padding-top:1rem; border-top:1px solid var(--rule);
+           color:var(--muted); font-size:.88rem; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg:#e8e8e8; --muted:#a0a0a0; --rule:#333; --link:#7fb3e8; }
+    body { background:#141414; }
+    a { border-bottom-color:rgba(127,179,232,.3); }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <h1>Kentaro Amauchi</h1>
+  <p class="sub">Independent researcher &mdash; number theory, combinatorics, formal verification</p>
+
+  <h2>Research interests</h2>
+  <p>
+    Let <code>A</code> be a finite set of odd positive integers and
+    <code>r<sub>A</sub>(n)</code> the number of subsets of <code>A</code> summing
+    to <code>n</code>. I study a weighted count of representations by the
+    <em>truncations</em> of <code>A</code> &mdash; obtained by deleting the
+    elements below a threshold and shifting the target &mdash; and its ratio to
+    <code>r<sub>A</sub>(n)</code>. That ratio converges, for every target, to a
+    rational number read off <code>A</code> by counting alone:
+    <code>&Gamma;(A) = 1 + 2&sum;<sub>d</sub>2<sup>&minus;N<sub>A</sub>(d)</sup></code>,
+    where <code>N<sub>A</sub>(d)</code> is the number of elements of <code>A</code>
+    that are at most <code>2d</code>. For the odd primes
+    <code>&Gamma; = 5.3492879&hellip;</code>, and the twin pairs are what make it
+    small.
+  </p>
+  <p>
+    The counted quantity has a second reading, which is where the question came
+    from: it counts the strict local minima of the subset-sum landscape of
+    <code>A</code>. A reader who wants none of that may take the displayed
+    identity as the definition; nothing is lost.
+  </p>
+  <p>
+    A recurring theme is replacing heuristic independence assumptions &mdash; the
+    &ldquo;annealed approximation&rdquo; of statistical mechanics &mdash; with
+    exact identities plus hypotheses that can actually be checked. The identity that
+    does most of that work is a classical one, the Kubert distribution relation; the
+    contribution is what it is made to replace.
+  </p>
+  <p>
+    The <em>structural</em> results are formally verified in
+    <a href="https://lean-lang.org/">Lean&nbsp;4</a> with Mathlib &mdash; no
+    <code>sorry</code>, no axiom beyond Lean's standard three, and an independent
+    kernel replay on top of the build. The analytic parts are <em>not</em>
+    formalised, and I would rather say so here than let the sentence above be read
+    as covering them. Every statement in every paper instead carries an explicit
+    status at the statement: <em>proved in Lean</em>, <em>proved</em>,
+    <em>derived</em>, <em>experimentally confirmed with the range given</em>, or
+    <em>conjecture</em>. The descriptions below use the same vocabulary, and are
+    meant to be the least flattering true description of each paper.
+  </p>
+
+  <h2>Papers</h2>
+
+  <p>
+    Three parts, in preparation for arXiv (math.NT), and one standalone note. An
+    earlier draft circulated in four instalments; the third has since been absorbed
+    into Part&nbsp;III and no longer exists as a separate document.
+  </p>
+
+  <div class="work">
+    <div class="title">Arithmetic landscapes I: the gap series<span class="tag">complete</span></div>
+    <div class="meta">
+      Introduces <code>&Gamma;</code>; proves the convergence above, a
+      classification theorem for the strict local minima of subset-sum landscapes,
+      a window identity
+      <code>W<sub>D</sub>(A) = &Gamma;(A) + (2D+1)/2<sup>k</sup></code>, an exact
+      stratification reducing the ratio to the flatness of representation counts of
+      truncations, and sharp extremal bounds
+      <code>3 &minus; 2<sup>1&minus;(M&minus;1)/2</sup> &le; &Gamma;(A) &le; M</code>
+      with both equality cases. Its structural part is verified in Lean&nbsp;4.
+    </div>
+  </div>
+
+  <div class="work">
+    <div class="title">Arithmetic landscapes II: asymptotic flatness of subset-sum landscapes of primes<span class="tag">complete</span></div>
+    <div class="meta">
+      The analytic half: the complete sub-peak spectrum of the characteristic
+      product, modulus&nbsp;6 as the unique maximiser, and hence
+      <code>lm/r &rarr; &Gamma;(P) = 5.3492879&hellip;</code> for the odd primes at
+      a geometric rate. The theorem carries no hypothesis. One constant is
+      ineffective, via Siegel&ndash;Walfisz, and the statement says which.
+    </div>
+  </div>
+
+  <div class="work">
+    <div class="title">Arithmetic landscapes III: deformed measures, random sequences, and the coset identity<span class="tag">mixed by section</span></div>
+    <div class="meta">
+      Opens with an exact identity for
+      <code>X(t) = &minus;log|cos&nbsp;&pi;t|</code>: averaging <code>X</code> over
+      a coset of index <code>v</code> returns the same function at <code>v</code>
+      times the frequency, plus a constant. The identity is classical &mdash; the
+      Kubert distribution relation for <code>log|2&nbsp;sin&nbsp;&pi;t|</code>, shifted
+      &mdash; and no part of it is claimed here. What is new is the use: because
+      <code>X &ge; 0</code> the rational points are the <em>minima</em> of the coset
+      average, which removes the quantitative equidistribution input a minor-arc
+      argument would normally need.
+      Then the Bernoulli(<code>q</code>) deformation <code>&Gamma;<sup>(q)</sup></code>,
+      a modulus-4 theorem, the minor-arc rate <code>1/&radic;2</code> for random odd
+      sequences, and the behaviour of the ratio away from the centre through an
+      explicit transfer function. Three of its theorems were conditional on one
+      named open problem; that problem was closed, and since <code>v1.1.0</code> the
+      three are unconditional. The rest are proved, Lean-verified, or
+      experimentally confirmed with the range given, item by item.
+    </div>
+  </div>
+
+  <div class="work">
+    <div class="title">Two speeds at the boundary: zeros of sums of conjugate sections of power series<span class="tag">standalone note</span></div>
+    <div class="meta">
+      Twelve pages, with no prerequisites from the papers above and no citations to
+      them &mdash; deliberately, so that a reader need not decide whether to trust
+      the rest before deciding whether the question is interesting. On the symmetry
+      line the object is real, so its zeros are sign changes. Two theorems are
+      <em>proved</em>: the first zero satisfies
+      <code>t<sub>1</sub> &gt; &frac12;tan(&pi;/k)</code> for <em>every</em>
+      non-increasing weight profile, and for weights
+      <code>(j+1)<sup>&minus;s</sup></code> with <code>s &gt; 1</code> the rate is
+      exactly <code>2kt<sub>1</sub><sup>2</sup>/log k &rarr; s &minus; &frac12;</code>.
+      Below <code>s = 1</code> &mdash; where the weights stop being summable &mdash;
+      the answer changes shape, and there it is measured rather than proved; the
+      note says which is which at each statement, and the written proof of the
+      second theorem is in the repository beside it.
+    </div>
+  </div>
+
+  <h2>Software</h2>
+  <ul>
+    <li>
+      <a href="https://github.com/KA-Laboratory/Physics-and-Mathematics">Physics-and-Mathematics</a>
+      &mdash; the three papers and the note, the Lean&nbsp;4 development, and every
+      numerical experiment together with its log. Archived at
+      <a href="https://doi.org/10.5281/zenodo.21941261">doi:10.5281/zenodo.21941261</a>
+      &mdash; which makes a version permanent, not true. The Lean development carries no
+      <code>sorry</code> and no axiom beyond Lean's standard three, and is replayed
+      independently through the kernel with a negative control. A number with no
+      log is treated as a number that does not exist, and the repository's own
+      checks enforce that &mdash; along with the rule that every theorem,
+      proposition, lemma and corollary must declare its status at the statement.
+      The repository moved to the
+      <a href="https://github.com/KA-Laboratory">KA-Laboratory</a> organisation on
+      24&nbsp;September&nbsp;2026; its original location,
+      <a href="https://github.com/mathlab0911/arithmetic-landscapes">mathlab0911/arithmetic-landscapes</a>,
+      is kept as a mirror. The releases and the Zenodo deposit behind the DOI above were
+      made from there, so links into them point there.
+    </li>
+  </ul>
+
+  <h2>Use of AI tools</h2>
+  <p>
+    This work was carried out with substantial assistance from large language
+    models (Anthropic's Claude), used for exploring constructions, drafting and
+    checking proofs, writing the Lean formalisation, and running and analysing the
+    numerical experiments. I direct the research, decide what is claimed, and am
+    responsible for every statement. The verification apparatus described above
+    exists because of this: the Lean development, the kernel replay, the logged
+    experiments and the repository's mechanical checks are how a claim earns its
+    status rather than being asserted. The same disclosure appears in each paper.
+  </p>
+
+  <h2>Contact</h2>
+  <p><a href="mailto:amkn.sub03@gmail.com">amkn.sub03@gmail.com</a></p>
+
+  <footer>Last updated: 24 September 2026.</footer>
+
+</main>
+</body>
+</html>
